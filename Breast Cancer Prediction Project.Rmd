@@ -1,0 +1,922 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
+
+```{r}
+Data <- read.csv("C:\\Users\\bensh\\Downloads\\data (1).csv")
+# Rename the data frame to "Breast Cancer Data Set"
+colnames(Data) <- "Breast Cancer Data Set"                 # renaming data set
+```
+
+```{r}
+# Read the data and rename the data frame
+`Breastcancerdata` <- read.csv("C:\\Users\\bensh\\Downloads\\data (1).csv")       #reading dataset
+
+```
+
+```{r}
+library(janitor)
+```
+
+```{r}
+Breastcancer_data2 <- clean_names(Breastcancerdata)
+
+```
+
+```{r}
+
+Breastcancer_data2 <- remove_empty(Breastcancer_data2, which = c("rows", "cols"), quiet = FALSE) # removing duplicate columns
+```
+
+
+
+```{r}
+# Load the dplyr package
+library(dplyr)
+
+# Assuming your dataset is named "data3", remove duplicate rows
+Breastcancer_data2<- distinct(Breastcancer_data2)
+
+
+```
+
+```{r}
+# Get the dimensions (shape) of the dataset
+dim(Breastcancer_data2)
+
+# Get a summary description of the dataset
+summary(Breastcancer_data2)
+```
+
+```{r}
+# Columns to be dropped
+columns_to_drop <- c("concavity_mean", "concave_points_mean", "radius_se", "texture_se", "perimeter_se", "area_se", 
+                     "smoothness_se", "compactness_se", "concavity_se", 
+                     "concave_points_se", "symmetry_se", "fractal_dimension_se", 
+                     "radius_worst", "texture_worst", "perimeter_worst", 
+                     "area_worst", "smoothness_worst", "compactness_worst", 
+                     "concavity_worst", "concave_points_worst", "symmetry_worst", 
+                     "fractal_dimension_worst")
+
+# Drop the specified columns from the Breast_cancer dataset
+Breastcancer_data2 <- Breastcancer_data2[, !names(Breastcancer_data2) %in% columns_to_drop]
+
+
+
+```
+
+```{r}
+
+# Normality test for radius_mean variable using Shapiro-Wilk test
+print("Normality test for radius_mean:")
+shapiro_test_radius <- shapiro.test(Breastcancer_data2$radius_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_radius$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_radius$p.value > 0.05) {
+  print("Data is normally distributed for radius_mean")
+} else {
+  print("Data is not normally distributed for radius_mean")
+}
+```
+
+
+
+```{r}
+# Normality test for texture_mean variable using Shapiro-Wilk test
+print("Normality test for texture_mean:")
+shapiro_test_texture <- shapiro.test(Breastcancer_data2$texture_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_texture$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_texture$p.value > 0.05) {
+  print("Data is normally distributed for texture_mean")
+} else {
+  print("Data is not normally distributed for texture_mean")
+}
+```
+
+
+```{r}
+# Normality test for perimeter_mean variable using Shapiro-Wilk test
+print("Normality test for perimeter_mean:")
+shapiro_test_perimeter <- shapiro.test(Breastcancer_data2$perimeter_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_perimeter$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_perimeter$p.value > 0.05) {
+  print("Data is normally distributed for perimeter_mean")
+} else {
+  print("Data is not normally distributed for perimeter_mean")
+}
+```
+
+
+```{r}
+# Normality test for area_mean variable using Shapiro-Wilk test
+print("Normality test for area_mean:")
+shapiro_test_area <- shapiro.test(Breastcancer_data2$area_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_area$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_area$p.value > 0.05) {
+  print("Data is normally distributed for area_mean")
+} else {
+  print("Data is not normally distributed for area_mean")
+}
+
+```
+
+
+```{r}
+# Normality test for smoothness_mean variable using Shapiro-Wilk test
+print("Normality test for smoothness_mean:")
+shapiro_test_smoothness <- shapiro.test(Breastcancer_data2$smoothness_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_smoothness$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_smoothness$p.value > 0.05) {
+  print("Data is normally distributed for smoothness_mean")
+} else {
+  print("Data is not normally distributed for smoothness_mean")
+}
+```
+
+
+```{r}
+# Normality test for compactness_mean variable using Shapiro-Wilk test
+print("Normality test for compactness_mean:")
+shapiro_test_compactness <- shapiro.test(Breastcancer_data2$compactness_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_compactness$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_compactness$p.value > 0.05) {
+  print("Data is normally distributed for compactness_mean")
+} else {
+  print("Data is not normally distributed for compactness_mean")
+}
+```
+```{r}
+# Normality test for symmetry_mean variable using Shapiro-Wilk test
+print("Normality test for symmetry_mean:")
+shapiro_test_symmetry <- shapiro.test(Breastcancer_data2$symmetry_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_symmetry$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_symmetry$p.value > 0.05) {
+  print("Data is normally distributed for symmetry_mean")
+} else {
+  print("Data is not normally distributed for symmetry_mean")
+}
+```
+```{r}
+
+# Normality test for fractal_dimension_mean variable using Shapiro-Wilk test
+print("Normality test for fractal_dimension_mean:")
+shapiro_test_fractal_dimension <- shapiro.test(Breastcancer_data2$fractal_dimension_mean)
+print(paste("Shapiro-Wilk test p-value:", shapiro_test_fractal_dimension$p.value))
+
+# Check if data is normal based on Shapiro-Wilk test
+if (shapiro_test_fractal_dimension$p.value > 0.05) {
+  print("Data is normally distributed for fractal_dimension_mean")
+} else {
+  print("Data is not normally distributed for fractal_dimension_mean")
+}
+
+```
+
+
+```{r}
+
+# Ensure the ggplot2 package is installed and loaded
+if (!require(ggplot2)) install.packages('ggplot2')
+
+# List of variables
+variables <- c("radius_mean", "texture_mean", "perimeter_mean", "area_mean",
+               "smoothness_mean", "compactness_mean", "symmetry_mean", "fractal_dimension_mean")
+
+# Create box plots for each variable
+plots <- lapply(variables, function(var) {
+  ggplot(Breastcancer_data2, aes_string(y = var)) +
+    geom_boxplot() +
+    labs(title = paste("Box Plot of", var), y = var)
+})
+
+# Display the plots
+plots
+```
+
+
+```{r}
+# Ensure the ggplot2 package is installed and loaded
+if (!require(ggplot2)) install.packages('ggplot2')
+
+# Function to calculate skewness
+skewness <- function(x) {
+  mean((x - mean(x)) ^ 3) / (sd(x) ^ 3)
+}
+
+# List of variables
+variables <- c("radius_mean", "texture_mean", "perimeter_mean", "area_mean",
+               "smoothness_mean", "compactness_mean", "symmetry_mean", "fractal_dimension_mean")
+
+# Calculate skewness for each variable
+skewness_values <- sapply(Breastcancer_data2[variables], skewness)
+
+# Create density plots for each variable
+plots <- lapply(variables, function(var) {
+  ggplot(Breastcancer_data2, aes_string(x = var)) +
+    geom_density() +
+    labs(title = paste("Density Plot of", var), x = var) +
+    theme_minimal()
+})
+
+# Display the plots
+plots
+
+# Print skewness values
+print(skewness_values)
+```
+
+```{r}
+# Ensure the ggplot2 package is installed and loaded
+if (!require(ggplot2)) install.packages('ggplot2')
+
+# List of variables
+variables <- c("radius_mean", "texture_mean", "perimeter_mean", "area_mean",
+               "smoothness_mean", "compactness_mean", "symmetry_mean", "fractal_dimension_mean")
+
+# Outlier treatment function
+treat_outliers <- function(x) {
+  mean_x <- mean(x, na.rm = TRUE)
+  sd_x <- sd(x, na.rm = TRUE)
+  threshold <- mean_x + 3 * sd_x
+  x[x > threshold] <- NA
+  return(x)
+}
+
+# Apply outlier treatment and create box plots for each variable
+plots <- lapply(variables, function(var) {
+  Breastcancer_data2[[var]] <- treat_outliers(Breastcancer_data2[[var]]) # Apply outlier treatment
+  ggplot(Breastcancer_data2, aes_string(y = var)) +
+    geom_boxplot() +
+    labs(title = paste("Box Plot of", var), y = var)
+})
+
+# Display the plots
+plots
+```
+
+
+```{r}
+## Calculate the quartiles of the radius_mean column
+quartiles <- quantile(Breastcancer_data2$radius_mean, probs = c(0, 0.25, 0.5, 0.75, 1))
+
+# Create a new column with the tumor size categories based on the quartile ranges
+Breastcancer_data2$tumor_size <- cut(Breastcancer_data2$radius_mean, 
+                                breaks = quartiles, 
+                                labels = c("Very Small Tumors", "Small Tumors", "Medium Tumors", "Large Tumors"), 
+                                include.lowest = TRUE)
+
+# Print the updated data frame
+head(Breastcancer_data2)
+
+```
+
+```{r}
+# Calculate the quartiles of the radius_mean column
+quartiles <- quantile(Breastcancer_data2$radius_mean, probs = c(0, 0.25, 0.5, 0.75, 1))
+
+# Create a new column with the tumor size categories based on the quartile ranges
+Breastcancer_data2$tumor_size <- cut(Breastcancer_data2$radius_mean, 
+                                    breaks = quartiles, 
+                                    labels = c("Very Small Tumors", "Small Tumors", "Medium Tumors", "Large Tumors"), 
+                                    include.lowest = TRUE)
+
+# Create a new column with numerical values corresponding to the categories in the existing "tumor_size" column
+Breastcancer_data2$tumor_size_numerical <- as.integer(as.factor(Breastcancer_data2$tumor_size))
+
+# Print the updated data frame
+head(Breastcancer_data2)
+
+```
+```{r}
+# Load necessary libraries
+library(ggplot2)
+
+# Assuming the diagnosis variable is named "diagnosis" in your dataset
+
+# Create histograms for all variables grouped by diagnosis
+for (var in c("radius_mean", "texture_mean", "perimeter_mean", "area_mean",
+              "smoothness_mean", "compactness_mean", "symmetry_mean")) {
+  
+  # Create histogram
+  p <- ggplot(Breastcancer_data2, aes_string(x = var, fill = "diagnosis")) +
+    geom_histogram(binwidth = 2, color = "black", alpha = 0.6) +
+    labs(x = var, y = "Frequency", title = paste("Distribution of", var)) +
+    theme_minimal() +
+    facet_wrap(~ diagnosis, ncol = 1)
+  
+  # Print histogram
+  print(p)
+}
+
+
+
+```
+```{r}
+
+
+# Select only numeric columns for correlation analysis
+numeric_data <- Breastcancer_data2[sapply(Breastcancer_data2, is.numeric)]
+
+
+# Compute the correlation matrix
+cor_matrix <- cor(numeric_data)
+
+
+# Print the correlation matrix
+print(cor_matrix)
+
+
+# Install and load corrplot package if not already installed
+if (!requireNamespace("corrplot", quietly = TRUE)) {
+    install.packages("corrplot")
+}
+library(corrplot)
+
+# Visualize the correlation matrix with adjusted plot size and label size
+corrplot(cor_matrix, method = "color", type = "upper", order = "hclust",
+         tl.col = "black", tl.srt = 45, addCoef.col = "black", 
+         number.cex = 0.8, tl.cex = 1.0)  
+
+# The correlation coefficients provided in the matrix indicate the strength and direction of the linear relationship between different features and tumor diagnosis. For instance, the radius_mean, perimeter_mean, and area_mean show strong positive correlations with tumor diagnosis, with coefficients of approximately 0.74, 0.73, and 0.74, respectively, indicating that larger values of these features tend to be associated with malignant tumors. Similarly, compactness_mean and smoothness_mean also show moderate positive correlations with tumor diagnosis, suggesting that higher compactness and smoothness values are associated with malignant tumors. Conversely, fractal_dimension_mean shows a moderate negative correlation with tumor diagnosis, implying that lower values of fractal dimension tend to be associated with malignant tumors. 
+```
+
+
+
+
+```{r}
+# Comparison of tumor size by diagnosis using box plot
+boxplot(tumor_size_numerical ~ diagnosis, data = Breastcancer_data2, 
+        main = "Tumor Size by Diagnosis", xlab = "Diagnosis", ylab = "Tumor Size")
+
+
+```
+
+```{r}
+
+# Create a scatter plot
+ggplot(Breastcancer_data2, aes(x = diagnosis, y = tumor_size_numerical, color = diagnosis)) +
+  geom_point(position = position_jitter(width = 0.2), alpha = 0.5) +
+  labs(x = "Diagnosis", y = "Tumor Size", title = "Comparison of Tumor Size by Diagnosis") +
+  theme_minimal()
+
+```
+
+
+
+```{r}
+
+
+# Comparison of morphological characteristics by tumor size using grouped box plots
+par(mfrow=c(3, 3))  # Setting up the layout for multiple plots
+for (var in c("radius_mean", "texture_mean", "perimeter_mean", "area_mean",
+              "smoothness_mean", "compactness_mean", "symmetry_mean", 
+              "fractal_dimension_mean")) {
+  boxplot(get(var) ~ tumor_size, data = Breastcancer_data2, main = var, 
+          xlab = "Tumor Size", ylab = var, col = c("lightblue", "lightgreen", "lightyellow", "lightcoral"))
+}
+
+```
+
+```{r}
+# Comparison of multiple variables by diagnosis using grouped box plots
+par(mfrow=c(2, 3))  
+for (var in c("radius_mean", "texture_mean", "perimeter_mean", "area_mean",
+              "smoothness_mean", "compactness_mean","fractal_dimension_mean")) {
+  boxplot(get(var) ~ diagnosis, data = Breastcancer_data2, main = var, 
+          xlab = "Diagnosis", ylab = var, col = c("lightblue", "lightgreen"))
+}
+
+```
+
+
+```{r}
+
+
+# Replace 'M' with 1 and 'D' with 0
+Breastcancer_data2$diagnosis <- ifelse(Breastcancer_data2$diagnosis == "M", 1,
+                                       ifelse(Breastcancer_data2$diagnosis == "B", 0, Breastcancer_data2$diagnosis))
+
+# If you want to convert the column to numeric type
+Breastcancer_data2$diagnosis <- as.numeric(Breastcancer_data2$diagnosis)
+
+
+```
+
+
+
+```{r}
+# Mann-Whitney U test for radius_mean
+mann_whitney_radius <- wilcox.test(radius_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for radius_mean:")
+print(mann_whitney_radius)
+
+# Association result for radius_mean
+association_radius <- ifelse(mann_whitney_radius$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for radius_mean:", association_radius))
+
+```
+
+
+```{r}
+# Mann-Whitney U test for texture_mean
+mann_whitney_texture <- wilcox.test(texture_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for texture_mean:")
+print(mann_whitney_texture)
+
+# Association result for texture_mean
+association_texture <- ifelse(mann_whitney_texture$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for texture_mean:", association_texture))
+
+```
+
+
+```{r}
+# Mann-Whitney U test for perimeter_mean
+mann_whitney_perimeter <- wilcox.test(perimeter_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for perimeter_mean:")
+print(mann_whitney_perimeter)
+
+# Association result for perimeter_mean
+association_perimeter <- ifelse(mann_whitney_perimeter$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for perimeter_mean:", association_perimeter))
+
+```
+
+
+```{r}
+# Mann-Whitney U test for area_mean
+mann_whitney_area <- wilcox.test(area_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for area_mean:")
+print(mann_whitney_area)
+
+# Association result for area_mean
+association_area <- ifelse(mann_whitney_area$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for area_mean:", association_area))
+
+```
+
+
+```{r}
+# Mann-Whitney U test for smoothness_mean
+mann_whitney_smoothness <- wilcox.test(smoothness_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for smoothness_mean:")
+print(mann_whitney_smoothness)
+
+# Association result for smoothness_mean
+association_smoothness <- ifelse(mann_whitney_smoothness$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for smoothness_mean:", association_smoothness))
+
+```
+
+
+```{r}
+# Mann-Whitney U test for compactness_mean
+mann_whitney_compactness <- wilcox.test(compactness_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for compactness_mean:")
+print(mann_whitney_compactness)
+
+# Association result for compactness_mean
+association_compactness <- ifelse(mann_whitney_compactness$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for compactness_mean:", association_compactness))
+
+```
+
+
+```{r}
+# Mann-Whitney U test for symmetry_mean
+mann_whitney_symmetry <- wilcox.test(symmetry_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for symmetry_mean:")
+print(mann_whitney_symmetry)
+
+# Association result for symmetry_mean
+association_symmetry <- ifelse(mann_whitney_symmetry$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for symmetry_mean:", association_symmetry))
+
+```
+
+
+```{r}
+# Mann-Whitney U test for fractal_dimension_mean
+mann_whitney_fractal_dimension <- wilcox.test(fractal_dimension_mean ~ diagnosis, data = Breastcancer_data2)
+print("Mann-Whitney U test for fractal_dimension_mean:")
+print(mann_whitney_fractal_dimension)
+
+# Association result for fractal_dimension_mean
+association_fractal_dimension <- ifelse(mann_whitney_fractal_dimension$p.value < 0.05, "Significant association", "No significant association")
+print(paste("Association result for fractal_dimension_mean:", association_fractal_dimension))
+
+```
+
+
+```{r}
+# Get unique values in the diagnosis column
+diagnosis_levels <- unique(Breastcancer_data2$diagnosis)
+
+# Perform chi-square test for each diagnosis variable
+for (level in diagnosis_levels) {
+  # Subset the data for the current diagnosis level
+  subset_data <- Breastcancer_data2[Breastcancer_data2$diagnosis == level, ]
+  
+  # Create a contingency table for tumor_size and the current diagnosis level
+  cont_table <- table(subset_data$tumor_size)
+  
+  # Perform chi-square test
+  chi_sq_test <- chisq.test(cont_table)
+  
+  # Print the results
+  print(paste("Chi-square test for", level, ":", sep = " "))
+  print(chi_sq_test)
+}
+```
+
+
+```{r}
+# Load the necessary libraries
+library(ggplot2)
+library(dplyr)
+
+# Prepare the data
+Breastcancer_data2$diagnosis <- as.factor(Breastcancer_data2$diagnosis)
+
+# Create a function to plot the association between diagnosis and a given feature
+plot_feature_association <- function(feature_name) {
+  ggplot(Breastcancer_data2, aes(x = !!sym(feature_name), fill = diagnosis)) +
+    geom_histogram(position = "dodge") +
+    labs(x = feature_name, y = "Count", fill = "Diagnosis") +
+    theme_minimal()
+}
+
+# Plot the association for each feature
+plot_feature_association("radius_mean")
+plot_feature_association("texture_mean")
+plot_feature_association("perimeter_mean")
+plot_feature_association("area_mean")
+```
+
+```{r}
+# Convert "diagnosis" variable to numeric
+Breastcancer_data2$diagnosis <- as.numeric(as.factor(Breastcancer_data2$diagnosis))
+
+# Specify variables for correlation analysis (including "diagnosis")
+correlation_variables <- c("radius_mean", "texture_mean", "perimeter_mean", 
+                            "area_mean", "smoothness_mean", "compactness_mean", 
+                            "symmetry_mean", "fractal_dimension_mean", "diagnosis")
+
+# Calculate Spearman correlation matrix
+correlation_matrix_spearman <- cor(Breastcancer_data2[, correlation_variables], method = "spearman")
+
+# Convert correlation matrix to data frame
+correlation_df_spearman <- as.data.frame(as.table(correlation_matrix_spearman))
+
+# Add variable names
+correlation_df_spearman$Var1 <- factor(correlation_df_spearman$Var1, levels = correlation_variables)
+correlation_df_spearman$Var2 <- factor(correlation_df_spearman$Var2, levels = correlation_variables)
+
+# Plot heatmap with Spearman correlation values displayed
+library(ggplot2)
+
+ggplot(correlation_df_spearman, aes(Var1, Var2, fill = Freq, label = round(Freq, 2))) +
+  geom_tile(color = "white") +
+  geom_text(color = "black", size = 3) +
+  scale_fill_gradient2(low = "#132B43", high = "#56B1F7", mid = "white", 
+                       midpoint = 0, limit = c(-1,1), space = "Lab", 
+                       name="Correlation") +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, vjust = 1, size = 10, hjust = 1)) +
+  coord_fixed() +
+  labs(x = "Variables", y = "Variables") +  # Adjust axis labels
+  scale_x_discrete(labels = c("Radius Mean", "Texture Mean", "Perimeter Mean", 
+                              "Area Mean", "Smoothness Mean", "Compactness Mean", 
+                              "Symmetry Mean", "Fractal Dimension Mean", "Diagnosis")) +  # Include variable names
+ scale_y_discrete(labels = c("Radius Mean", "Texture Mean", "Perimeter Mean", 
+                              "Area Mean", "Smoothness Mean", "Compactness Mean", 
+                              "Symmetry Mean", "Fractal Dimension Mean", "Diagnosis"))  # Include variable names
+```
+
+
+
+
+```{r}
+# Load necessary libraries
+library(ggplot2)
+library(caret)
+library(dplyr)
+library(e1071)
+
+# Prepare the data
+Breastcancer_data2$diagnosis <- as.factor(Breastcancer_data2$diagnosis)
+
+# Split the data into training and test sets
+set.seed(123)
+train_index <- createDataPartition(Breastcancer_data2$diagnosis, p = 0.8, list = FALSE)
+train_data <- Breastcancer_data2[train_index, ]
+test_data <- Breastcancer_data2[-train_index, ]
+
+# Train the SVM model for classification
+svm_model <- svm(diagnosis ~ ., data = train_data, type = "C-classification", kernel = "radial")
+
+# Evaluate the model on the test set
+predictions <- predict(svm_model, newdata = test_data)
+accuracy <- sum(predictions == test_data$diagnosis) / nrow(test_data)
+print(paste("Accuracy:", accuracy))
+
+# Plot the association between diagnosis and each feature
+for (feature in names(Breastcancer_data2)[2:ncol(Breastcancer_data2)]) {
+  plot_feature_association(feature)
+}
+
+# Function to plot the association between diagnosis and a feature
+plot_feature_association <- function(feature_name) {
+  ggplot(Breastcancer_data2, aes_string(x = feature_name, fill = "diagnosis")) +
+    geom_histogram(position = "dodge", binwidth = 1) +
+    labs(x = feature_name, y = "Count", fill = "Diagnosis") +
+    theme_minimal()
+}
+
+```
+```{r}
+
+library(pROC)
+library(caret)
+library(ggplot2)
+library(e1071)
+
+# Train the SVM model for classification with probability estimates
+svm_model <- svm(diagnosis ~ ., data = train_data, type = "C-classification", kernel = "radial", probability = TRUE)
+
+# Predict probabilities
+probabilities <- predict(svm_model, newdata = test_data, probability = TRUE)
+
+# Extract probabilities for the positive class
+# Assuming the positive class is the second factor level, adjust if necessary
+probs <- attr(probabilities, "probabilities")[,2]
+
+# ROC curve using the pROC package
+roc_obj <- roc(test_data$diagnosis, probs)
+plot(roc_obj, main = "ROC Curve")
+print(paste("AUC:", auc(roc_obj)))
+
+
+predictions <- predict(svm_model, newdata = test_data)
+
+# Generate the confusion matrix
+conf_matrix <- confusionMatrix(as.factor(predictions), as.factor(test_data$diagnosis))
+
+# Print the confusion matrix
+print(conf_matrix$table)
+
+# print the summary of the confusion matrix
+print(conf_matrix)
+
+```
+
+```{r}
+# Convert diagnosis to a factor if it's not already
+Breastcancer_data2$diagnosis <- as.factor(Breastcancer_data2$diagnosis)
+
+# Split the data into training and test sets
+set.seed(123)  # for reproducibility
+train_index <- createDataPartition(Breastcancer_data2$diagnosis, p = 0.8, list = FALSE)
+train_data <- Breastcancer_data2[train_index, ]
+test_data <- Breastcancer_data2[-train_index, ]
+
+
+logistic_model <- glm(diagnosis ~ ., data = train_data, family = binomial())
+
+
+# Predicting probabilities
+probabilities <- predict(logistic_model, newdata = test_data, type = "response")
+
+# Predicting class labels
+predicted_classes <- ifelse(probabilities > 0.5, levels(train_data$diagnosis)[2], levels(train_data$diagnosis)[1])
+
+
+
+
+```
+
+
+```{r}
+conf_matrix <- confusionMatrix(as.factor(predicted_classes), test_data$diagnosis)
+print(conf_matrix$table)
+print(conf_matrix$overall['Accuracy'])
+
+# print the summary of the confusion matrix
+print(conf_matrix)
+
+```
+```{r}
+# Get summary of the logistic regression model
+summary_glm <- summary(logistic_model)
+print(summary_glm)
+
+#Interpretation of the coefficients suggests that texture_mean, area_mean, and smoothness_mean are statistically significant predictors of tumor diagnosis, as their p-values are less than the conventional threshold of 0.05. This implies that changes in these features are associated with changes in the likelihood of tumor diagnosis. On the other hand, radius_mean and symmetry_mean also show some significance with p-values close to the threshold, indicating they might have some predictive value but require further investigation. However, other variables such as compactness_mean, perimeter_mean, and fractal_dimension_mean do not appear to be statistically significant predictors in this model. 
+```
+
+
+
+```{r}
+# View summary of the logistic regression model
+summary(logistic_model)
+
+# Predicting probabilities
+probabilities <- predict(logistic_model, newdata = test_data, type = "response")
+
+# Creating a data frame with predicted probabilities and observed classes
+predicted_observed <- data.frame(Probability = probabilities, Observed = test_data$diagnosis)
+
+# Plot predicted vs. observed
+plot(predicted_observed$Probability, predicted_observed$Observed, 
+     main = "Predicted vs. Observed Plot", xlab = "Predicted Probability", ylab = "Observed Class",
+     col = ifelse(predicted_observed$Observed == "2", "red", "blue"))
+legend("topright", legend = c("Benign", "Malignant"), col = c("blue", "red"), pch = 1)
+
+
+```
+
+
+```{r}
+# Load necessary library
+library(pROC)
+
+# Create ROC curve object
+roc_obj <- roc(test_data$diagnosis, probabilities)
+
+# Plot ROC curve
+plot(roc_obj, main = "ROC Curve for Logistic Regression")
+
+# Print AUC
+print(paste("Area Under Curve (AUC):", auc(roc_obj)))
+
+```
+
+```{r}
+conf_matrix <- confusionMatrix(as.factor(predicted_classes), test_data$diagnosis)
+print(conf_matrix$table)
+print(conf_matrix$overall['Accuracy'])
+
+# print the summary of the confusion matrix
+print(conf_matrix)
+
+
+```
+```{r}
+
+# Set seed for reproducibility
+set.seed(123)
+
+# Sample 10 random observations from the test set
+sample_test_data <- test_data[sample(nrow(test_data), 10), ]
+
+# Predict with Logistic Regression
+logistic_predictions <- predict(logistic_model, newdata = sample_test_data, type = "response")
+logistic_predicted_classes <- ifelse(logistic_predictions > 0.5, levels(train_data$diagnosis)[2], levels(train_data$diagnosis)[1])
+
+# Combine actual and predicted into a data frame for easy comparison
+comparison_data <- data.frame(
+  Actual = sample_test_data$diagnosis,
+  Predicted_Logistic = logistic_predicted_classes
+)
+
+# Print results
+print("Model Predictions Comparison:")
+print(comparison_data)
+
+
+
+```
+
+
+
+```{r}
+library(ggplot2)
+
+# Assuming 'Breastcancer_data2' is your dataset
+features <- c("radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean")
+
+# Loop through features and create histograms
+for (feature in features) {
+  print(ggplot(Breastcancer_data2, aes_string(x = feature, fill = "diagnosis")) +
+    geom_histogram(position = "dodge", binwidth = 0.5) +
+    labs(title = paste("Distribution of", feature, "by Diagnosis"),
+         x = feature,
+         y = "Count") +
+    theme_minimal())
+}
+```
+
+
+```{r}
+ggplot(Breastcancer_data2, aes(x = diagnosis, y = area_mean, fill = diagnosis)) +
+  geom_boxplot() +
+  labs(title = "Box Plot of Area Mean by Diagnosis",
+       x = "Diagnosis",
+       y = "Area Mean") +
+  theme_minimal()
+
+```
+
+```{r}
+library(corrplot)
+
+# Compute the correlation matrix
+cor_matrix <- cor(Breastcancer_data2[, c("radius_mean", "texture_mean", "perimeter_mean", "area_mean", "smoothness_mean")])
+
+# Plot the correlation matrix with a straightforward and safe color scheme
+corrplot(cor_matrix, method = "color",
+         col = colorRampPalette(c("navy", "white", "firebrick1"))(200),  # Simple and effective gradient: navy to white to firebrick
+         type = "upper",  # Display only the upper part of the matrix
+         order = "hclust",  # Order variables by hierarchical clustering
+         tl.col = "black",  # Text label color
+         tl.srt = 0,  # Text label rotation set to 0 to avoid problems
+         addCoef.col = "black",  # Color for the correlation coefficients
+         number.cex = 1.0,  # Adjust size of the coefficient labels for clarity
+         diag = FALSE)  # Avoid showing the diagonal (self-correlation is always 1)
+```
+
+```{r}
+library(caret)
+# Split data into training and test sets
+set.seed(123)
+index <- createDataPartition(Breastcancer_data2$diagnosis, p = 0.75, list = FALSE)
+train_set <- Breastcancer_data2[index,]
+test_set <- Breastcancer_data2[-index,]
+
+# Fit the logistic regression model
+model <- glm(diagnosis ~ ., data = train_set, family = "binomial")
+
+# Predict probabilities
+predictions <- predict(model, newdata = test_set, type = "response")
+
+
+```
+
+```{r}
+ggplot(Breastcancer_data2, aes(x = perimeter_mean, fill = diagnosis)) +
+  geom_density(alpha = 0.5) +
+  labs(title = "Density Plot of Perimeter Mean",
+       x = "Perimeter Mean",
+       y = "Density") +
+  theme_minimal()
+```
+
+
+
+```{r}
+# Read and clean data
+BreastCancerData <- read.csv("C:\\Users\\bensh\\Downloads\\data (1).csv")
+BreastCancerData <- BreastCancerData %>%
+  clean_names() %>%
+  distinct() %>%
+  select(-starts_with("x")) %>%
+  mutate(diagnosis = factor(diagnosis, levels = c("M", "B")))
+
+# Perform logistic regression for each feature and summarize results
+logistic_results <- lapply(features, function(feature) {
+  model <- glm(as.formula(paste("diagnosis ~", feature)), family = binomial, data = BreastCancerData)
+  summary(model)$coefficients
+})
+
+# Print results
+names(logistic_results) <- features
+print(logistic_results)
+
+# Visualizations for each feature comparing malignant and benign
+plots <- lapply(features, function(feature) {
+  ggplot(BreastCancerData, aes_string(x = feature, fill = "diagnosis")) +
+    geom_histogram(position = "dodge", bins = 30) +
+    labs(title = paste("Distribution of", feature, "by Tumor Type"), x = feature, y = "Frequency") +
+    theme_minimal()
+})
+print(plots)
+
+```
+```{r}
+# Check unique values of the diagnosis column
+unique_values <- unique(BreastCancerData$diagnosis)
+print(unique_values)
+
+# Check for missing values in the diagnosis column
+missing_values <- sum(is.na(BreastCancerData$diagnosis))
+print(missing_values)
+
+```
+
+
+
+
